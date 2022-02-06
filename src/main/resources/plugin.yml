@@ -1,0 +1,11 @@
+name: SchemDatabase
+version: ${project.version}
+main: de.leander.schemdatabase.SchemDatabase
+authors: [ Leander ]
+description: Get a schematic of a 1:1 norm into your WorldEdit clipboard.
+depend: []
+commands:
+  sdb:
+    description: Opens the SchemsDatabase
+    usage: /sdb <help|search|submit|categories|info>
+    aliases: [normen, norms, schems, schemdb, schemdatabase, schemsdb]
