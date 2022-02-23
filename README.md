@@ -1,15 +1,27 @@
 # SchemDatabase
 
-<p align="left">
-    <img src="https://cdn.discordapp.com/attachments/899979775521730622/899983636378554408/normsgui2.png">
-    
-</p>
 
 
----
+
+
 
 SchemDatabase is a fast and user-friendly plugin that allows you to obtain thousands of custom Minecraft schematics that feature unique designs.
-This easy-to-use norms plugin gives you access to creative designing opportunities that overall enhances the quality of your builds.
+This easy-to-use schematics plugin gives you access to creative designing opportunities that overall enhances the quality of your builds.
+
+---
+<p align="left">
+    <img src="https://cdn.discordapp.com/attachments/838024061384785970/938923177575321720/Screenshot_1346.jpg">
+    <img src="https://cdn.discordapp.com/attachments/838024061384785970/938923177810198568/Screenshot_1347.jpg">
+    <img src="https://cdn.discordapp.com/attachments/838024061384785970/938923178066079804/Screenshot_1348.jpg">
+</p>
+
+## Commands
+
+`/sdb` - Opens Gui
+
+`/sdb search <Schematic>` - Searches for schematic (norm)
+
+`/sdb submit <Name> <Category> <Head-ID/Item-Name> <isHead>` (Submits a schematic into database)
 
 ## Links
 
@@ -19,7 +31,9 @@ This easy-to-use norms plugin gives you access to creative designing opportuniti
 ## Suggestions
 Suggestions are welcome! We have a separate issue form for suggestions, that can be found [here](https://github.com/Build-the-Earth-Germany/NormsGUI/issues).
 
-## Example usage
+## Database design
+
+<img src="https://i.imgur.com/t4NlftM.png">
 
 ## Using this plugin
 
