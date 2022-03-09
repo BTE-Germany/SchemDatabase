@@ -105,7 +105,8 @@ public class SDBCommand implements CommandExecutor {
                         player.sendMessage("§b§lBTEG §7» §4No permission for /sdb search!");
                     }
                 } else if (args[0].matches("submit")) {
-                    if (args.length == 5) {
+
+                    if (args.length >= 5) {
                         if (player.hasPermission("sdb.submit")) {
                             Region plotRegion;
 
@@ -118,8 +119,22 @@ public class SDBCommand implements CommandExecutor {
                                 return true;
                             }
 
-                            if (args[2].equalsIgnoreCase("vehicles") || args[2].equalsIgnoreCase("trees") || args[2].equalsIgnoreCase("trafficsigns") || args[2].equalsIgnoreCase("trains") || args[2].equalsIgnoreCase("misc") || args[2].equalsIgnoreCase("infrastructure") || args[2].equalsIgnoreCase("airplanes")) {
-                                if (args[4].equalsIgnoreCase("y") || args[4].equalsIgnoreCase("yes") || args[4].equalsIgnoreCase("n") || args[4].equalsIgnoreCase("no")) {
+                            String name = "";
+                            String category = "";
+                            String id = "";
+                            String isHead= "";
+
+                            for(int i = 1; i<args.length-2; i++){
+                                if(args[i].equalsIgnoreCase("vehicles") || args[i].equalsIgnoreCase("trees") || args[i].equalsIgnoreCase("trafficsigns") || args[i].equalsIgnoreCase("trains") || args[i].equalsIgnoreCase("misc") || args[i].equalsIgnoreCase("infrastructure") || args[i].equalsIgnoreCase("airplanes")){
+                                    category = args[i];
+                                    id = args[i+1];
+                                    isHead = args[i+2];
+                                }else{
+                                    name = name + args[i] + " ";
+                                }
+                            }
+
+
                                     UUID uuid = UUID.randomUUID();
                                     File schematic = new File(uuid.toString() + ".schematic");
                                     try {
@@ -159,13 +174,13 @@ public class SDBCommand implements CommandExecutor {
                                         PreparedStatement preparedStatement = MySQL.getConnection()
                                                 .prepareStatement("INSERT INTO `schemdatabase`.`schematics` (`name`, `schematicData`, `category`, `iconId`, `iconIsHead`) VALUES (?, ?, ?, ?, ?);");
 
-                                        preparedStatement.setString(1, args[1]);
+                                        preparedStatement.setString(1, name);
                                         preparedStatement.setBinaryStream(2, input);
-                                        preparedStatement.setString(3, args[2]);
-                                        preparedStatement.setString(4, args[3]);
-                                        if(args[4].equalsIgnoreCase("y") || args[4].equalsIgnoreCase("yes")){
+                                        preparedStatement.setString(3, category);
+                                        preparedStatement.setString(4, id);
+                                        if(isHead.equalsIgnoreCase("y") || isHead.equalsIgnoreCase("yes")){
                                             preparedStatement.setInt(5, 1);
-                                        }else if(args[4].equalsIgnoreCase("n") || args[4].equalsIgnoreCase("no")){
+                                        }else if(isHead.equalsIgnoreCase("n") || isHead.equalsIgnoreCase("no")){
                                             preparedStatement.setInt(5, 0);
                                         }
 
@@ -195,9 +210,7 @@ public class SDBCommand implements CommandExecutor {
                         return true;
                     }
 
-                }
 
-            }
 
             return true;
         }

@@ -3,7 +3,7 @@ version: ${project.version}
 main: de.leander.schemdatabase.SchemDatabase
 authors: [ Leander ]
 description: Get a schematic of a 1:1 norm into your WorldEdit clipboard.
-depend: []
+depend: [HeadDatabase]
 commands:
   sdb:
     description: Opens the SchemsDatabase
