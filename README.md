@@ -6,7 +6,9 @@
 
 
 SchemDatabase is a fast and user-friendly plugin that allows you to obtain thousands of custom Minecraft schematics that feature unique designs.
-This easy-to-use schematics plugin gives you access to creative designing opportunities that overall enhances the quality of your builds.
+This easy-to-use schematics plugin gives you access to creative designing opportunities that overall enhances the quality of your builds. 
+
+NATIVE-MINECRAFT-VERSION: 1.12.2
 
 ---
 <p align="left">
