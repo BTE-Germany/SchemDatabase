@@ -19,11 +19,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -104,7 +100,36 @@ public class SDBCommand implements CommandExecutor {
                     } else {
                         player.sendMessage("§b§lBTEG §7» §4No permission for /sdb search!");
                     }
-                } else if (args[0].matches("submit")) {
+                } else if (args[0].matches("convert")) {
+                    if (args.length == 4) {
+                        if (player.hasPermission("sdb.convert")) {
+                            File ordner = new File("plugins/SchemDatabase/"+args[1]+"/");
+                            FilenameFilter filter = (dir, name) -> name.endsWith(".schematic");
+                            File[] schematics = ordner.listFiles(filter);
+                            for(File schematic : schematics){
+                                try {
+                                    FileInputStream input = new FileInputStream(schematic);
+                                    PreparedStatement preparedStatement = MySQL.getConnection()
+                                            .prepareStatement("INSERT INTO `schemdatabase`.`schematics` (`name`, `schematicData`, `category`, `iconId`, `iconIsHead`) VALUES (?, ?, ?, ?, ?);");
+                                    preparedStatement.setString(1, schematic.getName().replaceAll(".schematic","")+" ("+args[1]+")");
+                                    preparedStatement.setBinaryStream(2, input);
+                                    preparedStatement.setString(3, args[2]);
+                                    preparedStatement.setString(4, args[3]);
+                                    preparedStatement.setInt(5, 1);
+
+                                    player.sendMessage("§b§lBTEG §7» §7Schematic submitted to SchemDatabase!");
+                                    preparedStatement.execute();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    }else{
+                        player.sendMessage("§b§lBTEG §7» §cWrong usage: §7/sdb convert <Directory> <Category> <Head-Id>");
+                    }
+
+                }
+                else if (args[0].matches("submit")) {
 
                     if (args.length >= 5) {
                         if (player.hasPermission("sdb.submit")) {
@@ -153,7 +178,6 @@ public class SDBCommand implements CommandExecutor {
                                     WorldEditPlugin worldEdit = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
 
                                     Clipboard cb = new BlockArrayClipboard(plotRegion);
-                                    cb.setOrigin(cb.getRegion().getCenter());
                                     LocalSession playerSession = WorldEdit.getInstance().getSessionManager().findByName(player.getName());
                                     ForwardExtentCopy copy = new ForwardExtentCopy(playerSession.createEditSession(worldEdit.wrapPlayer(player)), plotRegion, cb, plotRegion.getMinimumPoint());
                                     try {
@@ -209,6 +233,7 @@ public class SDBCommand implements CommandExecutor {
                         player.sendMessage("§b§lBTEG §7» §cWrong usage: §7/sdb submit <Name> <category:/sdb categories> <Head-ID/Item-Name> <isHead>");
                         return true;
                     }
+
 
 
 
